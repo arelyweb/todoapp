@@ -1,0 +1,95 @@
+<section class="todoapp">
+    <header class="header">
+        <div class="container">
+          <h1>My Day</h1>
+          <p>All my tasks in one place</p>
+          <input
+            #todoText
+            class="new-todo"
+            placeholder="Type new todo"
+            autofocus
+            type="text"
+          />
+            <button 
+            class="button"
+             (click)="addTask(todoText.value)">Add</button>
+        </div>
+      </header>
+      <div class="container todoapp-wrapper">
+        <!-- This section should be hidden by default and shown when there are todos -->
+        <section class="main">
+          <ul class="todo-list">
+            <!-- <li class="completed">
+              <div class="view">
+                <input class="toggle" type="checkbox" checked />
+                <label>Learn JavaScript</label>
+                <button class="destroy"></button>
+              </div>
+              <input class="edit" value="Learn JavaScript" />
+            </li>
+            <li>
+              <div class="view">
+                <input class="toggle" type="checkbox" />
+                <label>Buy a unicorn</label>
+                <button class="destroy"></button>
+              </div>
+              <input class="edit" value="Buy a unicorn" />
+            </li>
+            <li class="editing">
+              <div class="view">
+                <input class="toggle" type="checkbox" />
+                <label>Make dishes</label>
+                <button class="destroy"></button>
+              </div>
+              <input class="edit" value="Make dishes" />
+            </li> -->
+            
+            <li *ngFor="let todoItem of todoList" >
+                <div [ngClass]="{pending:todoItem.pending}" [ngClass]="{completed: todoItem.completed}">
+                    <input type="checkbox" [(checked)]="todoItem.completed" (change)="toggleCompleted(todoItem.id)"/>
+                    <span>{{ todoItem.task }}</span>
+                    <button class="destroy" (click)="deleteTask(todoItem.id)"></button>
+                </div>
+            </li>
+            
+          </ul>
+        </section>
+        <!-- This footer should be hidden by default and shown when there are todos -->
+        <footer class="footer">
+          <!-- This should be `0 items left` by default -->
+          <span class="todo-count"><strong>{{todoList.length}}</strong> item left</span>
+          <!-- Remove this if you don't implement routing -->
+          <ul class="filters">
+            <li>
+                <button
+                class="selected"
+                [class.active]="filter == 'all'"
+                (click)="filter = 'all'">
+                All
+                </button>
+            </li>
+            &nbsp; 
+            <li>
+                <button
+                class="pending"
+                [class.active]="filter == 'pending'"
+                (click)="filter = 'pending'">
+                Pending
+                </button>
+            </li>
+            &nbsp; 
+            <li>
+                <button
+                class="completed"
+                [class.active]="filter == 'completed'"
+                (click)="filter = 'completed'">
+                Completed
+                </button>
+            </li>
+          </ul>
+          <!-- Hidden if no completed items are left ↓ -->
+          <button class="clear-completed">Clear completed</button>
+        </footer>
+      </div>
+    
+</section>
